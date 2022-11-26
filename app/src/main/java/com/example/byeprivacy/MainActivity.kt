@@ -3,6 +3,7 @@ package com.example.byeprivacy
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -28,11 +29,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
             bottomNav.setOnItemReselectedListener {
                 when (it.itemId) {
                     R.id.home -> {
                         navController.navigate(R.id.action_global_barsFragment)
+                    }
+                    R.id.profile -> {
+                        navController.navigate(R.id.action_global_accountFragment)
                     }
                 }
             }
