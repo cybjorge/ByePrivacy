@@ -29,6 +29,9 @@ interface RestApi {
     @GET("https://overpass-api.de/api/interpreter?")
     suspend fun barDetail(@Query("data") data : String): Response<BarDetailResponse>
 
+    @GET("https://overpass-api.de/api/interpreter?")
+    suspend fun barsInRadius(@Query("data") data: String): Response<BarDetailResponse>
+
     companion object{
         const val BASE_URL = "https://zadanie.mpage.sk/"
 

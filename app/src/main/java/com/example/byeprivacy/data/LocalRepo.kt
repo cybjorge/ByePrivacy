@@ -7,6 +7,7 @@ import com.example.byeprivacy.data.api.*
 import com.example.byeprivacy.data.db.LocalCache
 import com.example.byeprivacy.data.db.models.BarApiItem
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.utils.AppLocation
 import com.example.byeprivacy.utils.hashPassword
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -172,6 +173,45 @@ class LocalRepo private constructor(
         return bar_api_item
     }
 
+    suspend fun _barsInRadius(
+        lat:Double,
+        lon:Double,
+        onError: (error: String) -> Unit
+    ):List<BarApiItem>? {
+        var nearby_bars = listOf<BarApiItem>()
+        try {
+            val query = "data=[out:json];node(around:250,$lat, $lon)" +
+                    ";(node(around:250)[\"amenity\"~\"^pub\$|^bar\$|^restaurant\$|^cafe\$|^fast_food\$|^stripclub\$|^nightclub\$\"]" +
+                    ";);out body;>;out skel;"
+            val response = api.barsInRadius(query)
+            if (response.isSuccessful) {
+                response.body()?.let { nearby ->
+                    nearby_bars = nearby.elements.map {
+                        BarApiItem(
+                            it.id,
+                            it.tags.getOrDefault("name", ""),
+                            it.tags.getOrDefault("amenity", ""),
+                            it.lat,
+                            it.lon,
+                            it.tags
+                        ).apply { distance = distanceTo(AppLocation(lat, lon)) }
+
+                    }
+                    nearby_bars =
+                        nearby_bars.filter { it.name.isNotBlank() }.sortedBy { it.distance }
+                } ?: onError("Failed to load bars")
+            } else {
+                onError("Failed to read bars")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load bars, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load bars, error.")
+        }
+        return nearby_bars
+    }
 
     companion object{
         @Volatile
