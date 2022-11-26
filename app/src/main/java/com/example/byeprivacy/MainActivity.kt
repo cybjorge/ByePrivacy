@@ -2,6 +2,7 @@ package com.example.byeprivacy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
@@ -41,20 +42,15 @@ class MainActivity : AppCompatActivity() {
             }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("destination",destination.displayName)
+
             when (destination.id) {
+
                 R.id.loginFragment -> hideBottomNav()
                 R.id.signUpFragment -> showBottomNav()
                 else -> showBottomNav()
             }
         }
-        //bottom navigation
-        /*navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
-            if (nd.id == R.id.signUpFragment || nd.id == R.id.loginFragment) {
-                bottomNav.visibility = View.VISIBLE
-            } else {
-                bottomNav.visibility = View.GONE
-            }
-        }*/
 
     }
     private fun showBottomNav() {

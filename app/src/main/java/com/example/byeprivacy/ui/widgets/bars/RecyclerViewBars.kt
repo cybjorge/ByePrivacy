@@ -2,12 +2,14 @@ package com.example.byeprivacy.ui.widgets.bars
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.ui.fragments.BarsFragmentDirections
 
 class RecyclerViewBars : RecyclerView {
     private lateinit var adapterBars: AdapterBars
@@ -25,7 +27,9 @@ class RecyclerViewBars : RecyclerView {
         layoutManager = LinearLayoutManager(context, VERTICAL, false)
         adapterBars = AdapterBars(object : InterfaceBars {
             override fun onBarClick(bar: BarDbItem) {
-                this@RecyclerViewBars.findNavController().navigate(R.id.action_global_barsFragment)
+                this@RecyclerViewBars.findNavController().navigate(
+                    BarsFragmentDirections.actionGlobalDetailFragment(bar.id))
+                Log.d("recycler_bar",bar.id)
             }
         })
         adapter = adapterBars

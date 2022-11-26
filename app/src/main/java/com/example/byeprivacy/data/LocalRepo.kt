@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.byeprivacy.data.api.*
 import com.example.byeprivacy.data.db.LocalCache
+import com.example.byeprivacy.data.db.models.BarApiItem
 import com.example.byeprivacy.data.db.models.BarDbItem
 import com.example.byeprivacy.utils.hashPassword
 import java.io.IOException
@@ -102,7 +103,7 @@ class LocalRepo private constructor(
         try {
             val response = api.barList()
             if (response.isSuccessful){
-                Log.d("response_bar",response.body().toString())
+                //Log.d("response_bar",response.body().toString())
 
                 response.body()?.let { bars->
                     val b = bars.map {
@@ -133,6 +134,42 @@ class LocalRepo private constructor(
     }
     fun _dbBars() : LiveData<List<BarDbItem>?> {
         return cache.getBars()
+    }
+    suspend fun _barDetail(
+        id: String,
+        onError: (error: String) -> Unit
+    ): BarApiItem?{
+        var bar_api_item : BarApiItem? = null
+        try {
+            val query = "[out:json];node($id);out body;>;out skel;"
+            val response=api.barDetail(query)
+            if (response.isSuccessful){
+                response.body()?.let { bars ->
+                    if(bars.elements.isNotEmpty()){
+                        val bar = bars.elements.get(0)
+                        bar_api_item= BarApiItem(
+                            bar.id,
+                            bar.tags.getOrDefault("name",""),
+                            bar.tags.getOrDefault("amenity",""),
+                            bar.lat,
+                            bar.lon,
+                            bar.tags
+                        )
+                    }
+
+                }?: onError("Failed to load bar")
+            }
+            else{
+                onError("Failed to read bar")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load bars, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load bars, error.")
+        }
+        return bar_api_item
     }
 
 

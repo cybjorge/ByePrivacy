@@ -13,3 +13,14 @@ data class barResponseList(
     val lon: Double,
     val users: Int
 )
+data class BarItemDetailResponse(
+    val id: String,
+    val type: String,
+    val lat: Double,
+    val lon: Double,
+    val tags: Map<String,String>
+)
+
+data class BarDetailResponse(
+    val elements: List<BarItemDetailResponse>
+)

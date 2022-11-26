@@ -42,8 +42,7 @@ class AdapterBars(val events: InterfaceBars?=null):
         fun bind(item: BarDbItem, events: InterfaceBars?) {
             itemView.findViewById<TextView>(R.id.name).text = item.name
             itemView.findViewById<TextView>(R.id.count).text = item.users.toString()
-            Log.d("typ", item.type)
-            Log.d("meno", item.name)
+
             when (item.type) {
                 "pub" -> itemView.findViewById<ImageView>(R.id.type)
                     .setImageResource(R.drawable.pub)
