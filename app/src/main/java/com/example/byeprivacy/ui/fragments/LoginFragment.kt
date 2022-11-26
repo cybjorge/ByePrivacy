@@ -14,6 +14,7 @@ import com.example.byeprivacy.data.api.helpers.PreferenceData
 import com.example.byeprivacy.databinding.FragmentLoginBinding
 import com.example.byeprivacy.utils.Injection
 import com.example.byeprivacy.ui.viewmodels.LoginViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
