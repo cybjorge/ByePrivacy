@@ -12,6 +12,7 @@ import com.example.byeprivacy.utils.hashPassword
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.log
 
 
 class LocalRepo private constructor(
@@ -144,6 +145,9 @@ class LocalRepo private constructor(
         try {
             val query = "[out:json];node($id);out body;>;out skel;"
             val response=api.barDetail(query)
+            Log.d("detial_query",query)
+            Log.d("detail_response",response.toString())
+
             if (response.isSuccessful){
                 response.body()?.let { bars ->
                     if(bars.elements.isNotEmpty()){
@@ -177,13 +181,14 @@ class LocalRepo private constructor(
         lat:Double,
         lon:Double,
         onError: (error: String) -> Unit
-    ):List<BarApiItem>? {
+    ):List<BarApiItem> {
         var nearby_bars = listOf<BarApiItem>()
         try {
-            val query = "data=[out:json];node(around:250,$lat, $lon)" +
-                    ";(node(around:250)[\"amenity\"~\"^pub\$|^bar\$|^restaurant\$|^cafe\$|^fast_food\$|^stripclub\$|^nightclub\$\"]" +
-                    ";);out body;>;out skel;"
+            val query = "[out:json];node(around:250,$lat, $lon);(node(around:250)[\"amenity\"~\"^pub\$|^bar\$|^restaurant\$|^cafe\$|^fast_food\$|^stripclub\$|^nightclub\$\"];);out body;>;out skel;"
             val response = api.barsInRadius(query)
+            Log.d("query",query)
+            Log.d("lat and lon",lat.toString()+" "+lon.toString())
+            Log.d("response_body",response.toString())
             if (response.isSuccessful) {
                 response.body()?.let { nearby ->
                     nearby_bars = nearby.elements.map {
@@ -212,6 +217,31 @@ class LocalRepo private constructor(
         }
         return nearby_bars
     }
+
+    suspend fun _barCheckIn(
+        bar: BarApiItem,
+        onError: (error: String) -> Unit,
+        onServiceResponse: (success: Boolean)->Unit
+    ){
+        try {
+            val response = api.barMessage(barRequest(bar.id,bar.name,bar.type,bar.lat, bar.lon))
+            Log.d("message",response.toString())
+            if (response.isSuccessful){
+                response.body()?.let { user ->
+                    onServiceResponse(true)
+                }
+            }else {
+                onError("Failed to check in, try again later.")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Check in failed, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Check in failed, error.")
+        }
+    }
+
 
     companion object{
         @Volatile

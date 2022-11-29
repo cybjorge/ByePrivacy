@@ -32,6 +32,10 @@ interface RestApi {
     @GET("https://overpass-api.de/api/interpreter?")
     suspend fun barsInRadius(@Query("data") data: String): Response<BarDetailResponse>
 
+    @POST("bar/message.php")
+    @Headers("mobv-auth: accept")
+    suspend fun barMessage(@Body bar: barRequest) : Response<Any>
+
     companion object{
         const val BASE_URL = "https://zadanie.mpage.sk/"
 

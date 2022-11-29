@@ -3,10 +3,7 @@ package com.example.byeprivacy.utils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.byeprivacy.data.LocalRepo
-import com.example.byeprivacy.ui.viewmodels.BarsViewModel
-import com.example.byeprivacy.ui.viewmodels.DetailViewModel
-import com.example.byeprivacy.ui.viewmodels.LoginViewModel
-import com.example.byeprivacy.ui.viewmodels.SignUpViewModel
+import com.example.byeprivacy.ui.viewmodels.*
 
 class ViewModelFactory(private val repository: LocalRepo) : ViewModelProvider.Factory {
 
@@ -26,6 +23,11 @@ class ViewModelFactory(private val repository: LocalRepo) : ViewModelProvider.Fa
         if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DetailViewModel(repository) as T
+        }
+
+        if (modelClass.isAssignableFrom(BarsWithLocationViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return BarsWithLocationViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

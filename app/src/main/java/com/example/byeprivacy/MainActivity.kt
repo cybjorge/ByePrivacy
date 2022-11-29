@@ -12,7 +12,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.byeprivacy.ui.fragments.BarsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+object CheckinBar{
+    var checkedBar: String = ""
+    var checkedbool: Boolean = false
+}
 class MainActivity : AppCompatActivity() {
+
     lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +42,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.profile -> {
                         navController.navigate(R.id.action_global_accountFragment)
+                    }
+                    R.id.check_in -> {
+                        navController.navigate(R.id.action_global_barsWithLocation)
                     }
                 }
             }
