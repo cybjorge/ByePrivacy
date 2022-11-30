@@ -41,4 +41,8 @@
         android:id="@+id/barsWithLocation"
         android:name="com.example.byeprivacy.ui.fragments.BarsWithLocation"
         android:label="BarsWithLocation" /><action android:id="@+id/action_global_barsWithLocation" app:destination="@id/barsWithLocation"/>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.byeprivacy.ui.fragments.FriendsFragment"
+        android:label="FriendsFragment" /><action android:id="@+id/action_global_friendsFragment" app:destination="@id/friendsFragment"/>
 </navigation>

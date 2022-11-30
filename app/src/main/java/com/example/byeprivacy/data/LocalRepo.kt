@@ -7,6 +7,7 @@ import com.example.byeprivacy.data.api.*
 import com.example.byeprivacy.data.db.LocalCache
 import com.example.byeprivacy.data.db.models.BarApiItem
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.FriendItem
 import com.example.byeprivacy.utils.AppLocation
 import com.example.byeprivacy.utils.hashPassword
 import java.io.IOException
@@ -241,6 +242,106 @@ class LocalRepo private constructor(
             onError("Check in failed, error.")
         }
     }
+
+    suspend fun _getFollowingFriends(
+        onError: (error: String) -> Unit,
+    ):List<FriendItem>{
+        var friends = listOf<FriendItem>()
+        try {
+            val response = api.friendList()
+            Log.d("message_following",response.toString())
+            if (response.isSuccessful){
+                //Log.d("response_bar",response.body().toString())
+
+                response.body()?.let { friend->
+                     friends = friend.map {
+                        FriendItem(
+                            it.user_id,
+                            it.user_name,
+                            it.bar_id,
+                            it.bar_name,
+                            it.time,
+                            it.bar_lat,
+                            it.bar_lon
+                        )
+
+                    }
+                }?: onError("Failed to load friends")
+            }else {
+                onError("Failed to read friends")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+        return friends
+    }
+
+    suspend fun _getFollowersFriends(
+        onError: (error: String) -> Unit,
+    ):List<FriendItem>{
+        var friends = listOf<FriendItem>()
+        try {
+            val response = api.friendAddedByMeList()
+            Log.d("message_followers",response.toString())
+            if (response.isSuccessful){
+                //Log.d("response_bar",response.body().toString())
+
+                response.body()?.let { friend->
+                     friends = friend.map {
+                        FriendItem(
+                            it.user_id,
+                            it.user_name,
+                            it.bar_id,
+                            it.bar_name,
+                            it.time,
+                            it.bar_lat,
+                            it.bar_lon
+                        )
+
+                    }
+                }?: onError("Failed to load friends")
+            }else {
+                onError("Failed to read friends")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+        return friends
+    }
+
+    suspend fun _addFriend(
+        contact: String,
+        onError: (error: String) -> Unit,
+        onServiceResponse: (success: Boolean)->Unit
+        ){
+        try {
+            val response = api.addFriend(friendRequest(contact = contact))
+            Log.d("message_addFriend",response.toString())
+
+            if (response.isSuccessful){
+                response.body()?.let { friend->
+                    onServiceResponse(true)
+                }?: onError("Failed to add friend")
+            }else {
+                onError("Failed to add friend")
+            }
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+    }
+
 
 
     companion object{

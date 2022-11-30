@@ -13,6 +13,10 @@
         android:icon="@drawable/ic_baseline_location_on_24"
         android:title="Check In" />
     <item
+        android:id="@+id/social"
+        android:icon="@drawable/ic_baseline_groups_24"
+        android:title="Social" />
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Profile" />

@@ -163,6 +163,7 @@ class BarsWithLocation : Fragment() {
     }
     @SuppressLint("MissingPermission")
     private fun loadData() {
+        Log.d("loadData","loading bars")
         if (approveForegroundAndBackgroundLocation()) {
             viewModel.loading.postValue(true)
             fusedLocationClient.getCurrentLocation(

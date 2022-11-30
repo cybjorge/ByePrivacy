@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.check_in -> {
                         navController.navigate(R.id.action_global_barsWithLocation)
                     }
+                    R.id.social->{
+                        navController.navigate(R.id.action_global_friendsFragment)
+                    }
                 }
             }
 

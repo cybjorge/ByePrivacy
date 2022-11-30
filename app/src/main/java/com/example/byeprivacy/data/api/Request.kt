@@ -21,3 +21,7 @@ data class barRequest(
     val lat: Double,
     val lon: Double
 )
+
+data class friendRequest(
+    val contact: String
+)

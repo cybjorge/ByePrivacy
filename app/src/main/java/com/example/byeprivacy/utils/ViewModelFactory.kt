@@ -29,6 +29,10 @@ class ViewModelFactory(private val repository: LocalRepo) : ViewModelProvider.Fa
             @Suppress("UNCHECKED_CAST")
             return BarsWithLocationViewModel(repository) as T
         }
+        if (modelClass.isAssignableFrom(FriendsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FriendsViewModel(repository) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

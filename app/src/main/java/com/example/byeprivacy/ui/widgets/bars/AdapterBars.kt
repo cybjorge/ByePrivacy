@@ -40,6 +40,7 @@ class AdapterBars(val events: InterfaceBars?=null):
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: BarDbItem, events: InterfaceBars?) {
+            Log.d("barFromAdapter",item.toString())
             itemView.findViewById<TextView>(R.id.name).text = item.name
             itemView.findViewById<TextView>(R.id.count).text = item.users.toString()
 
