@@ -2,10 +2,12 @@ package com.example.byeprivacy.ui.widgets.locationBars
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.byeprivacy.data.db.models.BarApiItem
+import com.example.byeprivacy.ui.widgets.bars.AdapterBars
 
 
 class RecyclerViewCheckIn : RecyclerView {
@@ -36,4 +38,5 @@ fun RecyclerViewCheckIn.applyItems(
     bars: List<BarApiItem>?
 ) {
     (adapter as AdapterBarsCheckIn).items = bars ?: emptyList()
+    Log.d("bars checkin from binding", (adapter as AdapterBarsCheckIn).items.toString())
 }

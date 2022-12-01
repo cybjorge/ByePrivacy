@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.FriendItem
 
 
-@Database(entities = [BarDbItem::class], exportSchema = false, version = 1)
+@Database(entities = [BarDbItem::class,FriendItem::class], exportSchema = false, version = 1)
 abstract class RoomDatabaseBP: RoomDatabase() {
     abstract fun appDao(): DbDao
 

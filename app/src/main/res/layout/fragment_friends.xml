@@ -119,26 +119,17 @@
             app:layout_constraintTop_toBottomOf="@+id/following_counter">
 
 
-
-            <com.example.byeprivacy.ui.widgets.friends.RecyclerViewFollowers
-                android:id="@+id/recycler_followrs"
-                android:layout_width="match_parent"
-
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                app:followerItems="@{model.friendListFollowers}"
-                />
-
-
-
-            <com.example.byeprivacy.ui.widgets.friends.RecyclerViewFollowing
-                android:id="@+id/recycler_following"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible"
-                app:followingItems="@{model.friendListFollowing}" />
-
+                <com.example.byeprivacy.ui.widgets.friends.RecyclerViewFollowing
+                    android:id="@+id/recycler_following"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    app:followingItems="@{model.friendListFollowing}" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
 
         <View
             showTextToast="@{model.message}"

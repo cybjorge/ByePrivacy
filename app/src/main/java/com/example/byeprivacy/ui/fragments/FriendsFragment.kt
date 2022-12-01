@@ -3,6 +3,7 @@ package com.example.byeprivacy.ui.fragments
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +11,16 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.api.helpers.PreferenceData
+import com.example.byeprivacy.data.db.DbDao
 import com.example.byeprivacy.databinding.FragmentFriendsBinding
-import com.example.byeprivacy.ui.viewmodels.BarsViewModel
 import com.example.byeprivacy.ui.viewmodels.FriendsViewModel
-import com.example.byeprivacy.ui.widgets.friends.AdapterFriends
-import com.example.byeprivacy.ui.widgets.friends.RecyclerViewFollowers
+import com.example.byeprivacy.ui.widgets.friends.AdapterFollowing
 import com.example.byeprivacy.utils.Injection
 
 class FriendsFragment : Fragment() {
     private lateinit var binding: FragmentFriendsBinding
     private lateinit var viewModel: FriendsViewModel
+    private lateinit var adapterFollowing: AdapterFollowing
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, Injection.provideViewModelFactory(requireContext())).get(
@@ -36,27 +37,23 @@ class FriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("friends on binding","friends on binding")
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
+
         }.also { bind->
 
+
             bind.swiperefreshFollowers.setOnRefreshListener {
-                viewModel.refreshDataFollowers()
-                /*
-                if (bind.refreshBanner.visibility == View.VISIBLE){
-                    bind.refreshBanner.visibility = View.GONE
-                }
-                */
+                viewModel.refreshDataFollowing()
             }
-            /*
-            bind.follwersCounter.text=adapterFriends.getFollowersItemCount().toString()
-            bind.followingCounter.text=adapterFriends.getFollowingItemCount().toString()
-            */
             bind.addFriendButton.setOnClickListener{
                 if(bind.addFriendText.text.isNotBlank()){
                     viewModel.addFriend(bind.addFriendText.text.toString())
                     bind.addFriendText.text.clear()
+                    viewModel.refreshDataFollowing()
                 }
             }
 
@@ -67,7 +64,6 @@ class FriendsFragment : Fragment() {
                     }
                 }
             }
-
             //TODO followers and functionality
 
             bind.followingCounter.setOnClickListener {
@@ -76,7 +72,7 @@ class FriendsFragment : Fragment() {
                 bind.followingCounter.textSize = 30.0F
                 bind.follwersCounter.textSize = 15.0F
                 bind.recyclerFollowing.visibility = View.VISIBLE
-                bind.recyclerFollowrs.visibility = View.INVISIBLE
+                //bind.recyclerFollowrs.visibility = View.INVISIBLE
                 viewModel.refreshDataFollowing()
             }
             bind.follwersCounter.setOnClickListener {
@@ -85,7 +81,7 @@ class FriendsFragment : Fragment() {
                 bind.follwersCounter.textSize = 30.0F
                 bind.followingCounter.textSize = 15.0F
                 bind.recyclerFollowing.visibility = View.INVISIBLE
-                bind.recyclerFollowrs.visibility = View.VISIBLE
+               // bind.recyclerFollowrs.visibility = View.VISIBLE
                 viewModel.refreshDataFollowers()
             }
         }

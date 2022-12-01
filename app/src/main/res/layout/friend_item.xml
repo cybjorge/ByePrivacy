@@ -3,21 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view_friends"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/friend_username"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="friend_name"
+        tools:text="friend_name"
         android:layout_gravity="center_vertical">
     </TextView>
     <TextView
         android:id="@+id/friend_bar_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="DAJAKY BAR"
-        android:layout_gravity="end"
+        tools:text="DAJAKY BAR"
+        android:layout_gravity="center"
         >
 
     </TextView>

@@ -138,6 +138,9 @@ class LocalRepo private constructor(
     fun _dbBars() : LiveData<List<BarDbItem>?> {
         return cache.getBars()
     }
+    fun _dbFriends() : LiveData<List<FriendItem>?> {
+        return cache.getFriends()
+    }
     suspend fun _barDetail(
         id: String,
         onError: (error: String) -> Unit
@@ -187,9 +190,6 @@ class LocalRepo private constructor(
         try {
             val query = "[out:json];node(around:250,$lat, $lon);(node(around:250)[\"amenity\"~\"^pub\$|^bar\$|^restaurant\$|^cafe\$|^fast_food\$|^stripclub\$|^nightclub\$\"];);out body;>;out skel;"
             val response = api.barsInRadius(query)
-            Log.d("query",query)
-            Log.d("lat and lon",lat.toString()+" "+lon.toString())
-            Log.d("response_body",response.toString())
             if (response.isSuccessful) {
                 response.body()?.let { nearby ->
                     nearby_bars = nearby.elements.map {
@@ -251,8 +251,6 @@ class LocalRepo private constructor(
             val response = api.friendList()
             Log.d("message_following",response.toString())
             if (response.isSuccessful){
-                //Log.d("response_bar",response.body().toString())
-
                 response.body()?.let { friend->
                      friends = friend.map {
                         FriendItem(
@@ -266,6 +264,8 @@ class LocalRepo private constructor(
                         )
 
                     }
+                    cache.deleteFriends()
+                    cache.insertFriends(friends)
                 }?: onError("Failed to load friends")
             }else {
                 onError("Failed to read friends")
@@ -277,6 +277,7 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError("Failed to load friends, error.")
         }
+        Log.d("friends from api",friends.toString())
         return friends
     }
 

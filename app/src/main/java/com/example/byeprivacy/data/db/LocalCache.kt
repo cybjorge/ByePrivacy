@@ -2,6 +2,7 @@ package com.example.byeprivacy.data.db
 
 import androidx.lifecycle.LiveData
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.FriendItem
 
 class LocalCache(private val dao: DbDao) {
     suspend fun insertBars(bars: List<BarDbItem>){
@@ -10,4 +11,12 @@ class LocalCache(private val dao: DbDao) {
     suspend fun deleteBars(){ dao.deleteBars() }
 
     fun getBars(): LiveData<List<BarDbItem>?> = dao.getBars()
+
+
+    suspend fun insertFriends(friends: List<FriendItem>){
+        dao.insertFriends(friends)
+    }
+    suspend fun deleteFriends(){ dao.deleteFriends() }
+
+    fun getFriends(): LiveData<List<FriendItem>?> = dao.getFriends()
 }

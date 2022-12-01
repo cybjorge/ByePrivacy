@@ -1,7 +1,12 @@
 package com.example.byeprivacy.data.db.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+
+@Entity(tableName = "friends")
 class FriendItem (
-    val user_id: String,
+    @PrimaryKey val user_id: String,
     val user_name: String,
     val bar_id: String?,
     val bar_name: String?,

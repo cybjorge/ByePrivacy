@@ -1,5 +1,6 @@
 package com.example.byeprivacy.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.byeprivacy.data.LocalRepo
 import com.example.byeprivacy.data.db.models.BarDbItem
@@ -20,6 +21,7 @@ class BarsViewModel(private val repository: LocalRepo) : ViewModel() {
             emitSource(repository._dbBars())
         }
     fun refreshData(){
+        Log.d("refresg_bars",bars.toString())
         viewModelScope.launch {
             loading.postValue(true)
             repository._barList { _message.postValue(EventHandler(it)) }

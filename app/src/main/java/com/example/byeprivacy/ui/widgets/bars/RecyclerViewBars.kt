@@ -41,4 +41,5 @@ fun RecyclerViewBars.applyItems(
     bars: List<BarDbItem>?
 ) {
     (adapter as AdapterBars).items = bars ?: emptyList()
+    Log.d("bars from binding", (adapter as AdapterBars).items.toString())
 }

@@ -24,7 +24,9 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
             loading.postValue(true)
             repository._getFollowingFriends{_message.postValue(EventHandler(it))}
             loading.postValue(false)
+            emitSource(repository._dbFriends())
         }
+
     val friendListFollowers :LiveData<List<FriendItem>?> =
         liveData {
             loading.postValue(true)
@@ -51,7 +53,7 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
         }
     }
     fun refreshDataFollowing(){
-        Log.d(null,"refreshFollowin")
+        Log.d("following refresh tostring ",friendListFollowing.toString())
 
         viewModelScope.launch {
             loading.postValue(true)
