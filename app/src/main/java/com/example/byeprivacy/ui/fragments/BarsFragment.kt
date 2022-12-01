@@ -18,7 +18,7 @@ import com.example.byeprivacy.utils.Injection
 class BarsFragment : Fragment() {
     private lateinit var binding: FragmentBarsBinding
     private lateinit var viewModel: BarsViewModel
-
+    //TODO sorting
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, Injection.provideViewModelFactory(requireContext())).get(

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.ContactItem
 import com.example.byeprivacy.data.db.models.FriendItem
 
 @Dao
@@ -28,4 +29,14 @@ interface DbDao {
 
     @Query("SELECT * FROM friends")
     fun getFriends(): LiveData<List<FriendItem>?>
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContacts(contact: List<ContactItem>)
+
+    @Query("DELETE FROM contacts")
+    suspend fun deleteContacts()
+
+    @Query("SELECT * FROM contacts")
+    fun getContacts(): LiveData<List<ContactItem>?>
 }

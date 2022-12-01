@@ -8,24 +8,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/friend_username"
+        android:id="@+id/contact_username"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        tools:text="friend_name"
         android:layout_marginLeft="5dp"
-
-        android:gravity="center">
+        tools:text="friend_name"
+        android:gravity="center_vertical">
     </TextView>
-    <TextView
-        android:id="@+id/friend_bar_name"
+    <Button
+        android:id="@+id/contact_delete"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        tools:text="DAJAKY BAR"
-
-        android:gravity="center"
-        android:layout_gravity="center"
+        android:backgroundTint="#FF0000"
+        tools:text="DELETE"
+        android:layout_gravity="right"
         >
 
-    </TextView>
+    </Button>
 
 </androidx.cardview.widget.CardView>

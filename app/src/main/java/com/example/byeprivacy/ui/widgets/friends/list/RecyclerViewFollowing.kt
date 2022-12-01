@@ -1,4 +1,4 @@
-package com.example.byeprivacy.ui.widgets.friends
+package com.example.byeprivacy.ui.widgets.friends.list
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.db.models.FriendItem
 import com.example.byeprivacy.ui.fragments.BarsFragmentDirections
+import com.example.byeprivacy.ui.widgets.friends.InterfaceFriends
+import com.example.byeprivacy.ui.widgets.friends.list.AdapterFollowing
 
 class RecyclerViewFollowing : RecyclerView{
     private lateinit var adapterFriends: AdapterFollowing

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.byeprivacy.data.LocalRepo
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.ContactItem
 import com.example.byeprivacy.data.db.models.FriendItem
 import com.example.byeprivacy.utils.EventHandler
 import kotlinx.coroutines.launch
@@ -27,11 +28,12 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
             emitSource(repository._dbFriends())
         }
 
-    val friendListFollowers :LiveData<List<FriendItem>?> =
+    val friendListFollowers :LiveData<List<ContactItem>?> =
         liveData {
             loading.postValue(true)
             repository._getFollowersFriends{_message.postValue(EventHandler(it))}
             loading.postValue(false)
+            emitSource(repository._dbContacts())
         }
 
 
@@ -78,7 +80,13 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
         }
     }
 
-    fun removeFriend(){}
+    fun removeFriend(friend_name: String){
+        viewModelScope.launch {
+            loading.postValue(true)
+            repository._removeFriend(friend_name,{_message.postValue(EventHandler(it))},{_addedFriend.postValue(EventHandler(it))})
+            loading.postValue(false)
+        }
+    }
 
     fun show(msg: String){ _message.postValue(EventHandler(msg))}
 

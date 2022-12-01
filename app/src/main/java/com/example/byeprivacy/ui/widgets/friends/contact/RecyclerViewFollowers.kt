@@ -1,4 +1,4 @@
-package com.example.byeprivacy.ui.widgets.friends
+package com.example.byeprivacy.ui.widgets.friends.contact
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,10 +7,12 @@ import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.byeprivacy.data.db.models.FriendItem
-import com.example.byeprivacy.ui.fragments.BarsFragmentDirections
-class RecyclerViewFollowers : RecyclerView{
-    private lateinit var adapterFriends: AdapterFollowers
+import com.example.byeprivacy.R
+import com.example.byeprivacy.data.db.models.ContactItem
+import com.example.byeprivacy.ui.widgets.friends.InterfaceContacts
+/*
+class RecyclerViewFollowers : RecyclerView {
+    private lateinit var adapterFollowers: AdapterFollowers
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -23,20 +25,28 @@ class RecyclerViewFollowers : RecyclerView{
     private fun init(context: Context) {
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(context, VERTICAL, false)
-        adapterFriends = AdapterFollowers(object : InterfaceFriends {
-            override fun onFriendClick(id_bar: String) {
-                this@RecyclerViewFollowers.findNavController().navigate(
-                    BarsFragmentDirections.actionGlobalDetailFragment(id_bar))
-                Log.d("Followers bar id",id_bar)
+        adapter = AdapterFollowers(object : InterfaceContacts {
+            override fun onContactClick(username: String) {
+                Log.d("Followers bar id", username)
+                try {
+                }catch (ex: Exception){
+                    this@RecyclerViewFollowers.findNavController().navigate(R.id.action_global_friendsFragment)
+                }
+
             }
         })
-        adapter = adapterFriends
+        adapter = adapterFollowers
     }
 
 }
+
 @BindingAdapter(value = ["followerItems"])
 fun RecyclerViewFollowers.applyItems(
-    followers: List<FriendItem>?
+    followers: List<ContactItem>?
 ){
     (adapter as AdapterFollowers).items = followers ?: emptyList()
 }
+
+
+
+ */

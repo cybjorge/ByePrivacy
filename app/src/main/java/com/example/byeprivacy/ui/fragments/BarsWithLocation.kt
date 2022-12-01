@@ -37,6 +37,7 @@ import com.example.byeprivacy.utils.AppLocation
 import com.example.byeprivacy.utils.GeofenceBroadcastReceiver
 import com.example.byeprivacy.utils.Injection
 import com.google.android.gms.location.*
+//TODO correct loading of where am I, notifications
 
 class BarsWithLocation : Fragment() {
     private lateinit var binding: FragmentBarsWithLocationBinding
@@ -157,7 +158,8 @@ class BarsWithLocation : Fragment() {
             if (approveForegroundAndBackgroundLocation()) {
                 loadData()
             } else {
-                Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
+                permissionDialog()
+                //Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
             }
         }
     }
@@ -219,15 +221,13 @@ class BarsWithLocation : Fragment() {
                 setMessage("Allow background location (All times) for detecting when you leave bar.")
                 setPositiveButton("OK",
                     DialogInterface.OnClickListener { dialog, id ->
-                        locationPermissionRequest.launch(
-                            arrayOf(
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                            )
-                        )
-                    })
+                        startActivityForResult( Intent(android.provider.Settings.ACTION_APPLICATION_SETTINGS), 0)
+                    }
+
+                )
                 setNegativeButton("Cancel",
                     DialogInterface.OnClickListener { dialog, id ->
-                        // User cancelled the dialog
+                        Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
                     })
             }
             // Create the AlertDialog

@@ -7,6 +7,7 @@ import com.example.byeprivacy.data.api.*
 import com.example.byeprivacy.data.db.LocalCache
 import com.example.byeprivacy.data.db.models.BarApiItem
 import com.example.byeprivacy.data.db.models.BarDbItem
+import com.example.byeprivacy.data.db.models.ContactItem
 import com.example.byeprivacy.data.db.models.FriendItem
 import com.example.byeprivacy.utils.AppLocation
 import com.example.byeprivacy.utils.hashPassword
@@ -138,9 +139,7 @@ class LocalRepo private constructor(
     fun _dbBars() : LiveData<List<BarDbItem>?> {
         return cache.getBars()
     }
-    fun _dbFriends() : LiveData<List<FriendItem>?> {
-        return cache.getFriends()
-    }
+
     suspend fun _barDetail(
         id: String,
         onError: (error: String) -> Unit
@@ -283,17 +282,15 @@ class LocalRepo private constructor(
 
     suspend fun _getFollowersFriends(
         onError: (error: String) -> Unit,
-    ):List<FriendItem>{
-        var friends = listOf<FriendItem>()
+    ):List<ContactItem>{
+        var friends = listOf<ContactItem>()
         try {
             val response = api.friendAddedByMeList()
-            Log.d("message_followers",response.toString())
+            Log.d("FOLLOWING",response.toString())
             if (response.isSuccessful){
-                //Log.d("response_bar",response.body().toString())
-
                 response.body()?.let { friend->
                      friends = friend.map {
-                        FriendItem(
+                        ContactItem(
                             it.user_id,
                             it.user_name,
                             it.bar_id,
@@ -304,6 +301,8 @@ class LocalRepo private constructor(
                         )
 
                     }
+                    cache.deleteContacts()
+                    cache.insertContacts(friends)
                 }?: onError("Failed to load friends")
             }else {
                 onError("Failed to read friends")
@@ -315,14 +314,44 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError("Failed to load friends, error.")
         }
+        Log.d("FRIENDS",friends.toString())
         return friends
     }
-
-    suspend fun _addFriend(
+    fun _dbFriends() : LiveData<List<FriendItem>?> {
+        return cache.getFriends()
+    }
+    fun _dbContacts() : LiveData<List<ContactItem>?> {
+        return cache.getContacts()
+    }
+    suspend fun _removeFriend(
         contact: String,
         onError: (error: String) -> Unit,
         onServiceResponse: (success: Boolean)->Unit
         ){
+        try {
+            val response = api.removeFriend(friendRequest(contact = contact))
+            Log.d("message_addFriend",response.toString())
+
+            if (response.isSuccessful){
+                response.body()?.let { friend->
+                    onServiceResponse(true)
+                }?: onError("Failed to remove friend")
+            }else {
+                onError("Failed to remove friend")
+            }
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+    }
+    suspend fun _addFriend(
+        contact: String,
+        onError: (error: String) -> Unit,
+        onServiceResponse: (success: Boolean)->Unit
+    ){
         try {
             val response = api.addFriend(friendRequest(contact = contact))
             Log.d("message_addFriend",response.toString())
@@ -342,7 +371,6 @@ class LocalRepo private constructor(
             onError("Failed to load friends, error.")
         }
     }
-
 
 
     companion object{

@@ -16,7 +16,7 @@ import com.example.byeprivacy.databinding.FragmentDetailBinding
 import com.example.byeprivacy.ui.viewmodels.BarsViewModel
 import com.example.byeprivacy.ui.viewmodels.DetailViewModel
 import com.example.byeprivacy.utils.Injection
-
+//TODO ui
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: FragmentDetailBinding

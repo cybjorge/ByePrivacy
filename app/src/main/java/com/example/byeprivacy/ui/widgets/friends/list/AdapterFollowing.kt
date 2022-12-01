@@ -1,4 +1,4 @@
-package com.example.byeprivacy.ui.widgets.friends
+package com.example.byeprivacy.ui.widgets.friends.list
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.db.models.FriendItem
+import com.example.byeprivacy.ui.widgets.friends.InterfaceFriends
 import com.example.byeprivacy.utils.autoNotify
 import kotlin.properties.Delegates
 
@@ -24,10 +25,6 @@ class AdapterFollowing(val events: InterfaceFriends?=null):
     override fun getItemCount(): Int {
         return items.size
     }
-     fun followingCount(): Int {
-        return items.size
-    }
-
 
     override fun onBindViewHolder(holder: FriendItemViewHolder, position: Int) {
         Log.d("items friends",items.toString())
