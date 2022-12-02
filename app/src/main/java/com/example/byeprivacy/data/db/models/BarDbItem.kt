@@ -1,7 +1,9 @@
 package com.example.byeprivacy.data.db.models
 
+import android.location.Location
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.byeprivacy.utils.AppLocation
 
 
 @Entity(tableName = "bars")
@@ -11,12 +13,22 @@ class BarDbItem (
     val type: String,
     val lat: Double,
     val lon: Double,
-    var users: Int
+    var users: Int,
+    var distance: Double = 0.0
 ){
     override fun toString(): String {
-        return "BarDbItem(id='$id', name='$name', type='$type', lat=$lat, lon=$lon, users=$users)"
+        return "BarDbItem(id='$id', name='$name', type='$type', lat=$lat, lon=$lon, users=$users, distance=$distance)"
     }
 
+    fun distanceTo(location: AppLocation): Double{
+        return Location("").apply {
+            latitude=lat
+            longitude=lon
+        }.distanceTo(Location("").apply {
+            latitude=location.lat
+            longitude=location.lon
+        }).toDouble()
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -29,6 +41,7 @@ class BarDbItem (
         if (lat != other.lat) return false
         if (lon != other.lon) return false
         if (users != other.users) return false
+        if (distance != other.distance) return false
 
         return true
     }
@@ -40,6 +53,7 @@ class BarDbItem (
         result = 31 * result + lat.hashCode()
         result = 31 * result + lon.hashCode()
         result = 31 * result + users
+        result = 31 * result + distance.hashCode()
         return result
     }
 

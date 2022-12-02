@@ -39,4 +39,23 @@ interface DbDao {
 
     @Query("SELECT * FROM contacts")
     fun getContacts(): LiveData<List<ContactItem>?>
+
+
+    @Query("SELECT * FROM bars ORDER BY name ASC")
+    fun sortBarsByNameAsc(): LiveData<List<BarDbItem>?>
+
+    @Query("SELECT * FROM bars ORDER BY name DESC")
+    fun sortBarsByNameDesc(): LiveData<List<BarDbItem>?>
+
+    @Query("SELECT * FROM bars ORDER BY users ASC")
+    fun sortBarsByUsersAsc(): LiveData<List<BarDbItem>?>
+
+    @Query("SELECT * FROM bars ORDER BY users DESC")
+    fun sortBarsByUsersDesc(): LiveData<List<BarDbItem>?>
+
+    @Query("SELECT * FROM bars ORDER BY distance ASC")
+    fun sortBarsByDistsAsc(): LiveData<List<BarDbItem>?>
+
+    @Query("SELECT * FROM bars ORDER BY distance DESC")
+    fun sortBarsByDistsDesc(): LiveData<List<BarDbItem>?>
 }

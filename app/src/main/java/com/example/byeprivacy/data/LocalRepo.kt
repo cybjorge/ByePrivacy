@@ -102,15 +102,19 @@ class LocalRepo private constructor(
 
     }
     suspend fun _barList(
+        app_lat:Double,
+        app_lon:Double,
         onError: (error: String) -> Unit
-    ){
+    ):List<BarDbItem>{
+        var b= listOf<BarDbItem>()
+
         try {
             val response = api.barList()
             if (response.isSuccessful){
                 //Log.d("response_bar",response.body().toString())
 
                 response.body()?.let { bars->
-                    val b = bars.map {
+                     b = bars.map {
                         BarDbItem(
                             it.bar_id,
                             it.bar_name,
@@ -118,7 +122,7 @@ class LocalRepo private constructor(
                             it.lat,
                             it.lon,
                             it.users
-                        )
+                        ).apply { distance = distanceTo(AppLocation(app_lat, app_lon)) }
 
                     }
                     cache.deleteBars()
@@ -135,11 +139,26 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError(ex.printStackTrace().toString())
         }
+        return b
     }
-    fun _dbBars() : LiveData<List<BarDbItem>?> {
-        return cache.getBars()
+    fun _dbBars(sort_switch: Int) : LiveData<List<BarDbItem>?> {
+        Log.d("barsfrom_dbBars",cache.getBars().toString())
+        when(sort_switch){
+            1 -> return cache.getBarsSortDistDesc()
+            -1 ->  return cache.getBarsSortDistAsc()
+            2-> return cache.getBarsSortNameDesc()
+            -2 -> return cache.getBarsSortNameAsc()
+            3-> return cache.getBarsSortUserDesc()
+            -3-> return cache.getBarsSortUserAsc()
+            else -> return cache.getBars()
+        }
     }
-
+    /*
+    fun _dbBarsSortDist() : LiveData<List<BarDbItem>?> {
+        Log.d("barsfrom_dbBars",cache.getBarsSortDist().toString())
+        return cache.getBarsSortDist()
+    }
+*/
     suspend fun _barDetail(
         id: String,
         onError: (error: String) -> Unit
