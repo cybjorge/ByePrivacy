@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="model"
             type="com.example.byeprivacy.ui.viewmodels.DetailViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.fragments.DetailFragment">
@@ -31,14 +30,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_head" />
 
+        <Button
+            android:id="@+id/to_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="199dp"
+            android:layout_marginTop="36dp"
+            android:text="Show on map!"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/title_head"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.example.byeprivacy.ui.widgets.barDetail.RecyclerViewDetail
+            android:id="@+id/recyclerViewDetail"
             detail_items="@{model.details}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type"
-            />
+            app:layout_constraintTop_toBottomOf="@id/type" />
 
         <View
             showTextToast="@{model.message}"

@@ -1,5 +1,7 @@
 package com.example.byeprivacy.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -46,9 +48,20 @@ class DetailFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
+        }?.also { bind ->
+            bind.toMap.setOnClickListener {
+                val intent= Intent(Intent.ACTION_VIEW, Uri.parse("https://maps.google.com/?q=".plus(
+                    bind.model?.bar?.value?.lat
+                ).plus(",").plus(bind.model?.bar?.value?.lon)))
+                requireContext().startActivity(intent)
+            }
+
+
         }
+
         Log.d("detailfragment",navigationArgs.id)
         viewModel.loadBarDetail(navigationArgs.id)
     }
+    ///TODO zobrazit na mape
 
 }
