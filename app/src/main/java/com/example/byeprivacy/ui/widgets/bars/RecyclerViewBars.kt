@@ -24,7 +24,8 @@ class RecyclerViewBars : RecyclerView {
 
     private fun init(context: Context) {
         setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context, VERTICAL, false)
+        layoutManager = LinearLayoutManager(context, VERTICAL, true)
+
         adapterBars = AdapterBars(object : InterfaceBars {
             override fun onBarClick(bar: BarDbItem) {
                 this@RecyclerViewBars.findNavController().navigate(
@@ -33,6 +34,7 @@ class RecyclerViewBars : RecyclerView {
             }
         })
         adapter = adapterBars
+
     }
 
 }

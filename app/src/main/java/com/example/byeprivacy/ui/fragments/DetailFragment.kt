@@ -62,6 +62,5 @@ class DetailFragment : Fragment() {
         Log.d("detailfragment",navigationArgs.id)
         viewModel.loadBarDetail(navigationArgs.id)
     }
-    ///TODO zobrazit na mape
 
 }

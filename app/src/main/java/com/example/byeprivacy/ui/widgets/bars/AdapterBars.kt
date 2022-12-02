@@ -28,6 +28,7 @@ class AdapterBars(val events: InterfaceBars?=null):
 
     override fun onBindViewHolder(holder: BarItemViewHolder, position: Int) {
         holder.bind(items[position], events)
+
     }
 
     class BarItemViewHolder(
