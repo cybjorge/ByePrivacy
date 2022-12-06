@@ -3,6 +3,7 @@ package com.example.byeprivacy.utils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.byeprivacy.data.LocalRepo
+import com.example.byeprivacy.data.db.LocalCache
 import com.example.byeprivacy.ui.viewmodels.*
 
 class ViewModelFactory(private val repository: LocalRepo) : ViewModelProvider.Factory {

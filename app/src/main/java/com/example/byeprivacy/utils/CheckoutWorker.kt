@@ -2,6 +2,7 @@ package com.example.byeprivacy.utils
 
 import android.app.Notification
 import android.content.Context
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -27,6 +28,7 @@ class CheckoutWorker(val appContext: Context, workerParams: WorkerParameters) :
             RestApi.create(appContext).barMessage(barRequest("", "", "", 0.0, 0.0))
         checkedBar=""
         checkedbool = false
+        Log.d("responseCHECKOUT",response.isSuccessful.toString())
         return if (response.isSuccessful) Result.success() else Result.failure()
     }
 

@@ -6,10 +6,13 @@ import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.app.PendingIntent
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,11 +35,11 @@ import com.example.byeprivacy.ui.viewmodels.BarsViewModel
 import com.example.byeprivacy.ui.viewmodels.BarsWithLocationViewModel
 import com.example.byeprivacy.ui.widgets.locationBars.InterfaceBarsCheckIn
 import com.example.byeprivacy.ui.widgets.locationBars.RecyclerViewCheckIn
-import com.example.byeprivacy.utils.AppLocation
+import com.example.byeprivacy.utils.*
 
-import com.example.byeprivacy.utils.GeofenceBroadcastReceiver
-import com.example.byeprivacy.utils.Injection
 import com.google.android.gms.location.*
+import java.io.IOException
+
 //TODO correct loading of where am I, notifications
 
 class BarsWithLocation : Fragment() {
@@ -123,7 +126,7 @@ class BarsWithLocation : Fragment() {
                     }
                 }else{
                     if (gadgetQ){
-                        permissionDialog()
+                        permissionDialogFun(requireContext(),requireActivity(),requireView())
                     }
                 }
             }
@@ -158,24 +161,35 @@ class BarsWithLocation : Fragment() {
             if (approveForegroundAndBackgroundLocation()) {
                 loadData()
             } else {
-                permissionDialog()
+                permissionDialogFun(requireContext(),requireActivity(),requireView())
                 //Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
             }
         }
+
+        infoGPSandNetwork(requireContext())
+
     }
+
     @SuppressLint("MissingPermission")
     private fun loadData() {
         Log.d("loadData","loading bars")
         if (approveForegroundAndBackgroundLocation()) {
-            viewModel.loading.postValue(true)
-            fusedLocationClient.getCurrentLocation(
-                CurrentLocationRequest.Builder().setDurationMillis(30000)
-                    .setMaxUpdateAgeMillis(60000).build(), null
-            ).addOnSuccessListener {
-                it?.let {
-                    viewModel.appLocation.postValue(AppLocation(it.latitude, it.longitude))
-                } ?: viewModel.loading.postValue(false)
+            try {
+                viewModel.loading.postValue(true)
+                fusedLocationClient.getCurrentLocation(
+                    CurrentLocationRequest.Builder().setDurationMillis(30000)
+                        .setMaxUpdateAgeMillis(60000).build(), null
+                ).addOnSuccessListener {
+                    it?.let {
+                        viewModel.appLocation.postValue(AppLocation(it.latitude, it.longitude))
+                    } ?: viewModel.loading.postValue(false)
+                }
+            }catch (ex: IOException) {
+                ex.printStackTrace()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
+
         }
     }
 
@@ -211,30 +225,5 @@ class BarsWithLocation : Fragment() {
             }
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun permissionDialog() {
-        val alertDialog: AlertDialog = requireActivity().let {
-            val builder = AlertDialog.Builder(it)
-            builder.apply {
-                setTitle("Background location needed")
-                setMessage("Allow background location (All times) for detecting when you leave bar.")
-                setPositiveButton("OK",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        startActivityForResult( Intent(android.provider.Settings.ACTION_APPLICATION_SETTINGS), 0)
-                    }
-
-                )
-                setNegativeButton("Cancel",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
-                    })
-            }
-            // Create the AlertDialog
-            builder.create()
-        }
-        alertDialog.show()
-    }
-
 
 }

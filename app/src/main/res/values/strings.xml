@@ -1,8 +1,11 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="app_name">ByePrivacy</string>
     <string name="or_sign_up">Or sign-up</string>
     <string name="sign_up">Sign up</string>
     <string name="bars" />
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gps_network_not_enabled">GPS is not allowed on this device</string>
+    <string name="open_location_settings">Open location settings</string>
+    <string name="Cancel">Cancel</string>
+
 </resources>

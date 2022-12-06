@@ -10,7 +10,10 @@ class BarApiItem(
     val lat: Double,
     val lon: Double,
     val tags: Map<String, String>,
+    var users: String,
     var distance: Double = 0.0
+
+
 ) {
     fun distanceTo(location: AppLocation): Double{
         return Location("").apply {
@@ -34,6 +37,7 @@ class BarApiItem(
         if (lat != other.lat) return false
         if (lon != other.lon) return false
         if (tags != other.tags) return false
+        if (users != other.users) return false
 
         return true
     }
@@ -45,6 +49,7 @@ class BarApiItem(
         result = 31 * result + lat.hashCode()
         result = 31 * result + lon.hashCode()
         result = 31 * result + tags.hashCode()
+        result = 31 * result + users.hashCode()
         return result
     }
 

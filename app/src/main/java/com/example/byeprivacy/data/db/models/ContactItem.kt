@@ -4,9 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "contacts")
 class ContactItem (
-    @PrimaryKey val user_id: String,
+    val user_id: String,
     val user_name: String,
     val bar_id: String?,
     val bar_name: String?,

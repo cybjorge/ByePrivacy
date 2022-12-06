@@ -47,7 +47,7 @@ class FriendsFragment : Fragment() {
 
             bind.swiperefreshFollowers.setOnRefreshListener {
                 viewModel.refreshDataFollowing()
-                viewModel.refreshDataFollowers()
+                //viewModel.refreshDataFollowers()
 
             }
             bind.addFriendButton.setOnClickListener{
@@ -71,13 +71,14 @@ class FriendsFragment : Fragment() {
 
             bind.following.setOnClickListener {
                 bind.following.setTextColor(Color.parseColor("#533483"))
-                bind.followers.setTextColor(Color.parseColor("#000000"))
+                //bind.followers.setTextColor(Color.parseColor("#000000"))
                 bind.following.textSize = 30.0F
-                bind.followers.textSize = 15.0F
+               // bind.followers.textSize = 15.0F
                 bind.recyclerFollowing.visibility = View.VISIBLE
                 //bind.recyclerFollowrs.visibility = View.INVISIBLE
                 viewModel.refreshDataFollowing()
             }
+            /*
             bind.followers.setOnClickListener {
                 bind.followers.setTextColor(Color.parseColor("#533483"))
                 bind.following.setTextColor(Color.parseColor("#000000"))
@@ -87,6 +88,8 @@ class FriendsFragment : Fragment() {
                 //bind.recyclerFollowrs.visibility = View.VISIBLE
                 //viewModel.refreshDataFollowers()
             }
+
+             */
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             binding.swiperefreshFollowers.isRefreshing = it

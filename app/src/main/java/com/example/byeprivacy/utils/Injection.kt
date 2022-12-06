@@ -21,7 +21,7 @@ object Injection {
         return ViewModelFactory(
             provideDataRepository(
                 context
-            )
+            ),
         )
     }
 }

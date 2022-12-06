@@ -38,12 +38,12 @@
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
-        android:shadowColor="#533483"
+        android:shadowColor="@color/grey"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="5"
         android:singleLine="true"
-        android:textColor="#E94560"
+        android:textColor="@color/orange"
         android:textSize="20dp"
         android:textStyle="bold"
 
@@ -52,33 +52,11 @@
     <TextView
         android:id="@+id/distance"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#E94560"
+        android:textColor="@color/grey"
         android:layout_marginBottom="3dp"
         tools:text="500"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center" />
-<!--
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/animation_view_pin"
-        app:lottie_rawRes="@raw/location_pin"
-        android:layout_gravity="bottom|right"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true">
-    </com.airbnb.lottie.LottieAnimationView>
-
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/animation_view_check"
-        app:lottie_rawRes="@raw/check"
-        android:layout_gravity="bottom|right"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="true">
-    </com.airbnb.lottie.LottieAnimationView>
--->
 
 </androidx.cardview.widget.CardView>

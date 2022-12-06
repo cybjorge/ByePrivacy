@@ -1,5 +1,6 @@
 package com.example.byeprivacy.ui.widgets.bars
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,10 +41,12 @@ class AdapterBars(val events: InterfaceBars?=null):
         )
     ) : RecyclerView.ViewHolder(itemView) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: BarDbItem, events: InterfaceBars?) {
             Log.d("barFromAdapter",item.toString())
             itemView.findViewById<TextView>(R.id.name).text = item.name
-            itemView.findViewById<TextView>(R.id.count).text = item.users.toString()
+            itemView.findViewById<TextView>(R.id.count).text = item.users.toString()+" visitors"
+            itemView.findViewById<TextView>(R.id.dstnc).text = "%.2f m".format(item.distance)
 
             when (item.type) {
                 "pub" -> itemView.findViewById<ImageView>(R.id.type)

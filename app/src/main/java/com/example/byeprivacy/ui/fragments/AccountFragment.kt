@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.navigation.findNavController
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.api.helpers.PreferenceData
@@ -29,6 +30,8 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val x = PreferenceData.getInstance().getUserItem(requireContext())
         view.findViewById<ImageView>(R.id.logout).setOnClickListener{
             PreferenceData.getInstance().clearData(requireContext())
             view.findNavController().navigate(R.id.action_global_loginFragment)

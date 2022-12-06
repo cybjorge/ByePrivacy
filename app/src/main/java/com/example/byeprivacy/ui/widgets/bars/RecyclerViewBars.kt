@@ -22,9 +22,9 @@ class RecyclerViewBars : RecyclerView {
         init(context)
     }
 
-    private fun init(context: Context) {
+    fun init(context: Context) {
         setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context, VERTICAL, true)
+        layoutManager = LinearLayoutManager(context, VERTICAL, false)
 
         adapterBars = AdapterBars(object : InterfaceBars {
             override fun onBarClick(bar: BarDbItem) {

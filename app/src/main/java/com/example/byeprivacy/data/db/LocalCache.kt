@@ -1,6 +1,7 @@
 package com.example.byeprivacy.data.db
 
 import androidx.lifecycle.LiveData
+import com.example.byeprivacy.data.db.models.BarApiItem
 import com.example.byeprivacy.data.db.models.BarDbItem
 import com.example.byeprivacy.data.db.models.ContactItem
 import com.example.byeprivacy.data.db.models.FriendItem
@@ -13,6 +14,7 @@ class LocalCache(private val dao: DbDao) {
 
     fun getBars(): LiveData<List<BarDbItem>?> = dao.getBars()
 
+    fun getBarItem(bar: String) : Int = dao.getBarsValue(bar)
 
     suspend fun insertFriends(friends: List<FriendItem>){
         dao.insertFriends(friends)
@@ -21,14 +23,14 @@ class LocalCache(private val dao: DbDao) {
 
     fun getFriends(): LiveData<List<FriendItem>?> = dao.getFriends()
 
-
+/*
     suspend fun insertContacts(contacts: List<ContactItem>){
         dao.insertContacts(contacts)
     }
     suspend fun deleteContacts(){ dao.deleteContacts() }
 
     fun getContacts(): LiveData<List<ContactItem>?> = dao.getContacts()
-
+*/
     fun getBarsSortDistDesc(): LiveData<List<BarDbItem>?> = dao.sortBarsByDistsDesc()
     fun getBarsSortDistAsc(): LiveData<List<BarDbItem>?> = dao.sortBarsByDistsAsc()
 

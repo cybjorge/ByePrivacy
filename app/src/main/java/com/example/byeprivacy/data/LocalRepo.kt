@@ -111,7 +111,7 @@ class LocalRepo private constructor(
         try {
             val response = api.barList()
             if (response.isSuccessful){
-                //Log.d("response_bar",response.body().toString())
+                Log.d("response_bar",response.body().toString())
 
                 response.body()?.let { bars->
                      b = bars.map {
@@ -153,6 +153,9 @@ class LocalRepo private constructor(
             else -> return cache.getBars()
         }
     }
+    fun _dbBarItem(bar: String): String{
+        return cache.getBarItem(bar).toString()
+    }
     /*
     fun _dbBarsSortDist() : LiveData<List<BarDbItem>?> {
         Log.d("barsfrom_dbBars",cache.getBarsSortDist().toString())
@@ -180,7 +183,8 @@ class LocalRepo private constructor(
                             bar.tags.getOrDefault("amenity",""),
                             bar.lat,
                             bar.lon,
-                            bar.tags
+                            bar.tags,
+                            _dbBarItem(bar.id)
                         )
                     }
 
@@ -196,8 +200,12 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError("Failed to load bars, error.")
         }
+        Log.d("bar api item bars",bar_api_item?.users.toString())
+
         return bar_api_item
     }
+
+
 
     suspend fun _barsInRadius(
         lat:Double,
@@ -217,8 +225,13 @@ class LocalRepo private constructor(
                             it.tags.getOrDefault("amenity", ""),
                             it.lat,
                             it.lon,
-                            it.tags
-                        ).apply { distance = distanceTo(AppLocation(lat, lon)) }
+                            it.tags,
+                            //_dbBarItem(it.id)
+                            ""
+                        ).apply {
+                            //users=_dbBarItem(it.id)
+                            distance = distanceTo(AppLocation(lat, lon))
+                        }
 
                     }
                     nearby_bars =
@@ -234,6 +247,7 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError("Failed to load bars, error.")
         }
+        Log.d("nearby bars",nearby_bars.toString())
         return nearby_bars
     }
 
@@ -298,7 +312,7 @@ class LocalRepo private constructor(
         Log.d("friends from api",friends.toString())
         return friends
     }
-
+/*
     suspend fun _getFollowersFriends(
         onError: (error: String) -> Unit,
     ):List<ContactItem>{
@@ -335,13 +349,15 @@ class LocalRepo private constructor(
         }
         Log.d("FRIENDS",friends.toString())
         return friends
-    }
+    }*/
     fun _dbFriends() : LiveData<List<FriendItem>?> {
         return cache.getFriends()
-    }
+    }/*
     fun _dbContacts() : LiveData<List<ContactItem>?> {
         return cache.getContacts()
     }
+
+ */
     suspend fun _removeFriend(
         contact: String,
         onError: (error: String) -> Unit,
