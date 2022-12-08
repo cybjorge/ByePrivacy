@@ -27,7 +27,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
         // Get the transition type.
         val geofenceTransition = geofencingEvent.geofenceTransition
-
         // Test that the reported transition was of interest.
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences

@@ -120,7 +120,6 @@ class BarsWithLocation : Fragment() {
                     viewModel.checkMeIn()
                     bind.animationViewPin.visibility = View.VISIBLE
                     bind.animationCheck.visibility = View.GONE
-                    Log.d("checkbar", checkedBar)
                     if (checkedbool){
                         bind.headerTitle.text="Currently in "+ checkedBar
                     }
@@ -162,7 +161,6 @@ class BarsWithLocation : Fragment() {
                 loadData()
             } else {
                 permissionDialogFun(requireContext(),requireActivity(),requireView())
-                //Navigation.findNavController(requireView()).navigate(R.id.action_global_barsFragment)
             }
         }
 

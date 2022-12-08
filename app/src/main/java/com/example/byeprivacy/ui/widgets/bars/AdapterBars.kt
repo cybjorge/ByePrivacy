@@ -43,7 +43,6 @@ class AdapterBars(val events: InterfaceBars?=null):
 
         @SuppressLint("SetTextI18n")
         fun bind(item: BarDbItem, events: InterfaceBars?) {
-            Log.d("barFromAdapter",item.toString())
             itemView.findViewById<TextView>(R.id.name).text = item.name
             itemView.findViewById<TextView>(R.id.count).text = item.users.toString()+" visitors"
             itemView.findViewById<TextView>(R.id.dstnc).text = "%.2f m".format(item.distance)

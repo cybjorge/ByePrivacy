@@ -6,13 +6,6 @@ import java.security.SecureRandom
 import kotlin.experimental.and
 
 
-fun generateSalt(): ByteArray {
-    val random = SecureRandom()
-    val salt = ByteArray(16)
-    random.nextBytes(salt)
-    return salt
-}
-
 fun hashPassword(password: String): String {
     var generatedPassword: String? = null
     try {

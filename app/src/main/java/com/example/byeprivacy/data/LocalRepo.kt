@@ -30,11 +30,7 @@ class LocalRepo private constructor(
         try {
             val hashed_password = hashPassword(password)
             val response = api.userCreate(UserCreateRequest(name = name,password = hashed_password))
-            Log.d("user_sign_nick",name)
-            Log.d("user_sign_pwd",password)
-            Log.d("user_sign_pwd_hash",hashed_password)
             if (response.isSuccessful){
-                Log.d("response",response.body().toString())
                 response.body()?.let{ user ->
                     if (user.uid == "-1"){
                         onServiceResponse(null)
@@ -71,9 +67,6 @@ class LocalRepo private constructor(
         try {
             val hashed_password = hashPassword(password)
             val response = api.userLogin(UserLoginRequest(name = name,password = hashed_password))
-            Log.d("user_log_in_nick",name)
-            Log.d("user_log_in_pwd",password)
-            Log.d("user_log_in_pwd_hash",hashed_password)
             if (response.isSuccessful){
                 response.body()?.let{ user ->
                     if (user.uid == "-1"){
@@ -101,6 +94,7 @@ class LocalRepo private constructor(
         }
 
     }
+
     suspend fun _barList(
         app_lat:Double,
         app_lon:Double,
@@ -111,8 +105,6 @@ class LocalRepo private constructor(
         try {
             val response = api.barList()
             if (response.isSuccessful){
-                Log.d("response_bar",response.body().toString())
-
                 response.body()?.let { bars->
                      b = bars.map {
                         BarDbItem(
@@ -141,6 +133,7 @@ class LocalRepo private constructor(
         }
         return b
     }
+
     fun _dbBars(sort_switch: Int) : LiveData<List<BarDbItem>?> {
         Log.d("barsfrom_dbBars",cache.getBars().toString())
         when(sort_switch){
@@ -153,15 +146,11 @@ class LocalRepo private constructor(
             else -> return cache.getBars()
         }
     }
+
     fun _dbBarItem(bar: String): String{
         return cache.getBarItem(bar).toString()
     }
-    /*
-    fun _dbBarsSortDist() : LiveData<List<BarDbItem>?> {
-        Log.d("barsfrom_dbBars",cache.getBarsSortDist().toString())
-        return cache.getBarsSortDist()
-    }
-*/
+
     suspend fun _barDetail(
         id: String,
         onError: (error: String) -> Unit
@@ -170,8 +159,7 @@ class LocalRepo private constructor(
         try {
             val query = "[out:json];node($id);out body;>;out skel;"
             val response=api.barDetail(query)
-            Log.d("detial_query",query)
-            Log.d("detail_response",response.toString())
+
 
             if (response.isSuccessful){
                 response.body()?.let { bars ->
@@ -226,10 +214,8 @@ class LocalRepo private constructor(
                             it.lat,
                             it.lon,
                             it.tags,
-                            //_dbBarItem(it.id)
                             ""
                         ).apply {
-                            //users=_dbBarItem(it.id)
                             distance = distanceTo(AppLocation(lat, lon))
                         }
 
@@ -281,7 +267,6 @@ class LocalRepo private constructor(
         var friends = listOf<FriendItem>()
         try {
             val response = api.friendList()
-            Log.d("message_following",response.toString())
             if (response.isSuccessful){
                 response.body()?.let { friend->
                      friends = friend.map {
@@ -309,55 +294,13 @@ class LocalRepo private constructor(
             ex.printStackTrace()
             onError("Failed to load friends, error.")
         }
-        Log.d("friends from api",friends.toString())
         return friends
     }
-/*
-    suspend fun _getFollowersFriends(
-        onError: (error: String) -> Unit,
-    ):List<ContactItem>{
-        var friends = listOf<ContactItem>()
-        try {
-            val response = api.friendAddedByMeList()
-            Log.d("FOLLOWING",response.toString())
-            if (response.isSuccessful){
-                response.body()?.let { friend->
-                     friends = friend.map {
-                        ContactItem(
-                            it.user_id,
-                            it.user_name,
-                            it.bar_id,
-                            it.bar_name,
-                            it.time,
-                            it.bar_lat,
-                            it.bar_lon
-                        )
 
-                    }
-                    cache.deleteContacts()
-                    cache.insertContacts(friends)
-                }?: onError("Failed to load friends")
-            }else {
-                onError("Failed to read friends")
-            }
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            onError("Failed to load friends, check internet connection")
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            onError("Failed to load friends, error.")
-        }
-        Log.d("FRIENDS",friends.toString())
-        return friends
-    }*/
     fun _dbFriends() : LiveData<List<FriendItem>?> {
         return cache.getFriends()
-    }/*
-    fun _dbContacts() : LiveData<List<ContactItem>?> {
-        return cache.getContacts()
     }
 
- */
     suspend fun _removeFriend(
         contact: String,
         onError: (error: String) -> Unit,
@@ -365,7 +308,6 @@ class LocalRepo private constructor(
         ){
         try {
             val response = api.removeFriend(friendRequest(contact = contact))
-            Log.d("message_addFriend",response.toString())
 
             if (response.isSuccessful){
                 response.body()?.let { friend->

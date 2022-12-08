@@ -61,10 +61,6 @@ class AdapterBarsCheckIn (val events: InterfaceBarsCheckIn?=null):
 
             itemView.setOnClickListener {
                 events?.onClickCheckIn(item)
-                Log.d("layout position",layoutPosition.toString())
-                Log.d("adapter position",adapterPosition.toString())
-                Log.d("position",position.toString())
-
             }
         }
     }

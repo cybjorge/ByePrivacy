@@ -20,7 +20,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.byeprivacy.data.api.helpers.PreferenceData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-//TODO fix bottom nav
 
 object CheckinBar{
     var checkedBar: String = ""

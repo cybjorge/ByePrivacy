@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import com.example.byeprivacy.R
 import com.example.byeprivacy.data.api.helpers.PreferenceData
 
-//TODO maybe UI, maybe delete
 class AccountFragment : Fragment() {
 
 

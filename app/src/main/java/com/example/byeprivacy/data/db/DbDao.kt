@@ -33,17 +33,6 @@ interface DbDao {
     @Query("SELECT * FROM friends")
     fun getFriends(): LiveData<List<FriendItem>?>
 
-/*
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertContacts(contact: List<ContactItem>)
-
-    @Query("DELETE FROM contacts")
-    suspend fun deleteContacts()
-
-    @Query("SELECT * FROM contacts")
-    fun getContacts(): LiveData<List<ContactItem>?>
-*/
-
     @Query("SELECT * FROM bars ORDER BY name ASC")
     fun sortBarsByNameAsc(): LiveData<List<BarDbItem>?>
 

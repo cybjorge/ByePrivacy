@@ -23,14 +23,6 @@ class LocalCache(private val dao: DbDao) {
 
     fun getFriends(): LiveData<List<FriendItem>?> = dao.getFriends()
 
-/*
-    suspend fun insertContacts(contacts: List<ContactItem>){
-        dao.insertContacts(contacts)
-    }
-    suspend fun deleteContacts(){ dao.deleteContacts() }
-
-    fun getContacts(): LiveData<List<ContactItem>?> = dao.getContacts()
-*/
     fun getBarsSortDistDesc(): LiveData<List<BarDbItem>?> = dao.sortBarsByDistsDesc()
     fun getBarsSortDistAsc(): LiveData<List<BarDbItem>?> = dao.sortBarsByDistsAsc()
 

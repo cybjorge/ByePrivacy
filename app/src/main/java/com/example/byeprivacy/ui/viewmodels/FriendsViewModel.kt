@@ -27,33 +27,7 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
             loading.postValue(false)
             emitSource(repository._dbFriends())
         }
-/*
-    val friendListFollowers :LiveData<List<ContactItem>?> =
-        liveData {
-            loading.postValue(true)
-            repository._getFollowersFriends{_message.postValue(EventHandler(it))}
-            loading.postValue(false)
-            emitSource(repository._dbContacts())
-        }
 
-*/
-    fun getFriendsFollowing(){
-        //fucntion uses data from GET https://zadanie.mpage.sk/contact/list.php
-        viewModelScope.launch {
-            loading.postValue(true)
-            repository._getFollowingFriends { _message.postValue(EventHandler(it)) }
-            loading.postValue(false)
-        }
-    }/*
-    fun getFriendsFollowes(){
-        //fucntion uses data from GET https://zadanie.mpage.sk/contact/friends.php
-
-        viewModelScope.launch {
-            loading.postValue(true)
-            repository._getFollowersFriends { _message.postValue(EventHandler(it)) }
-            loading.postValue(false)
-        }
-    }*/
     fun refreshDataFollowing(){
         Log.d("following refresh tostring ",friendListFollowing.toString())
 
@@ -63,15 +37,7 @@ class FriendsViewModel(private val repository: LocalRepo) : ViewModel(){
             loading.postValue(false)
         }
     }
-/*
-    fun refreshDataFollowers(){
-        Log.d(null,"refreshFollowers")
-        viewModelScope.launch {
-            loading.postValue(true)
-            repository._getFollowersFriends { _message.postValue(EventHandler(it)) }
-            loading.postValue(false)
-        }
-    }*/
+
     fun addFriend(friend_name: String){
         viewModelScope.launch {
             loading.postValue(true)

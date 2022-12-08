@@ -36,7 +36,6 @@ class DetailViewModel(private val repository: LocalRepo) : ViewModel() {
     }
 
     fun loadBarDetail(id: String){
-        Log.d("detail_view_model",id)
         if (id.isNotBlank()){
             CoroutineScope(Dispatchers.IO).launch {
                 loading.postValue(true)

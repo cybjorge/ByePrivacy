@@ -60,7 +60,6 @@ class BarsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("bars on binding","bars on binding")
         val x = PreferenceData.getInstance().getUserItem(requireContext())
         if ((x?.uid ?: "").isBlank()) {
             Navigation.findNavController(view).navigate(com.example.byeprivacy.R.id.action_global_loginFragment)

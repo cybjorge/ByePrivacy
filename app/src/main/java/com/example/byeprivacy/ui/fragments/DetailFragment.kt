@@ -78,14 +78,12 @@ class DetailFragment : Fragment() {
                 }
 
             }
-            //bind.barUsers.text= bind.model?.bar?.value?.users.toString()
-            //bind.model?.details?.let { bindImg(it) }
+
             Log.d("type", viewModel.type.value.toString())
         }
 
 
         Log.d("detailfragment", navigationArgs.id)
-        //Log.d("marp", viewModel.type.value.toString())
         viewModel.loadBarDetail(navigationArgs.id)
     }
 

@@ -36,7 +36,6 @@ class FriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("friends on binding","friends on binding")
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -47,16 +46,12 @@ class FriendsFragment : Fragment() {
 
             bind.swiperefreshFollowers.setOnRefreshListener {
                 viewModel.refreshDataFollowing()
-                //viewModel.refreshDataFollowers()
 
             }
             bind.addFriendButton.setOnClickListener{
                 if(bind.addFriendText.text.isNotBlank()){
                     viewModel.addFriend(bind.addFriendText.text.toString())
                     bind.addFriendText.text.clear()
-                    /*if (bind.recyclerFollowrs.visibility == View.VISIBLE){
-                        //viewModel.refreshDataFollowers()
-                    }*/
                 }
             }
 
@@ -67,29 +62,10 @@ class FriendsFragment : Fragment() {
                     }
                 }
             }
-            //TODO followers and functionality
 
             bind.following.setOnClickListener {
-                bind.following.setTextColor(Color.parseColor("#533483"))
-                //bind.followers.setTextColor(Color.parseColor("#000000"))
-                bind.following.textSize = 30.0F
-               // bind.followers.textSize = 15.0F
-                bind.recyclerFollowing.visibility = View.VISIBLE
-                //bind.recyclerFollowrs.visibility = View.INVISIBLE
                 viewModel.refreshDataFollowing()
             }
-            /*
-            bind.followers.setOnClickListener {
-                bind.followers.setTextColor(Color.parseColor("#533483"))
-                bind.following.setTextColor(Color.parseColor("#000000"))
-                bind.followers.textSize = 30.0F
-                bind.following.textSize = 15.0F
-                bind.recyclerFollowing.visibility = View.INVISIBLE
-                //bind.recyclerFollowrs.visibility = View.VISIBLE
-                //viewModel.refreshDataFollowers()
-            }
-
-             */
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             binding.swiperefreshFollowers.isRefreshing = it

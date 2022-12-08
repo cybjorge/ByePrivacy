@@ -27,8 +27,6 @@ class AdapterFollowing(val events: InterfaceFriends?=null):
     }
 
     override fun onBindViewHolder(holder: FriendItemViewHolder, position: Int) {
-        Log.d("items friends",items.toString())
-
         holder.bind(items[position], events)
     }
 
@@ -41,7 +39,6 @@ class AdapterFollowing(val events: InterfaceFriends?=null):
         )
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: FriendItem, events: InterfaceFriends?) {
-            Log.d("followerItemFromAdatpterFollowing", item.toString())
             itemView.findViewById<TextView>(R.id.friend_username).text = item.user_name
             itemView.findViewById<TextView>(R.id.friend_bar_name).text = item.bar_name
             if (item.bar_id!=null){
